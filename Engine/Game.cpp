@@ -26,7 +26,8 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	plr(plrStartLoc),
-	brd(gfx,plr)
+	brd(gfx,plr),
+	pfnd(brd,gfx)
 {
 }
 
@@ -45,5 +46,5 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 	brd.Draw();
-	brd.DrawMap();
+	pfnd.DrawMap();
 }

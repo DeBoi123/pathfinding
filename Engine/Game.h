@@ -24,6 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "Board.h"
+#include "Pathfinder.h"
 
 class Game
 {
@@ -41,9 +42,10 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-	Location plrStartLoc = { 1, 3 };
+	Location plrStartLoc = { 2, 4 };
 	Player plr;
 	Board brd;
+	Pathfinder pfnd;
 
 	/********************************/
 	/*  User Variables              */
