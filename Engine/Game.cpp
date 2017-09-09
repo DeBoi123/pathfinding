@@ -45,4 +45,5 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 	brd.Draw();
+	brd.DrawMap();
 }

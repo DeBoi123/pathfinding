@@ -6,11 +6,13 @@ class Board
 {
 public:
 	Board(Graphics& gfx_in, Player& plr_in);
-	Location GetPlayerLocation() const;
+	Location GetPlayerLocation() const; //maybe I dont need the getters after all
 	Location GetGoalLocation() const;
 	Location GetObstacleLocation(const int i) const;
+	void InitMap();
 	void DrawCell(const Location& loc, const Color& c);
 	void DrawSmallCell(const Location& loc, const Color& c);
+	void DrawMap();
 	void Draw();
 
 private:
@@ -30,4 +32,6 @@ private:
 		{ 20,20 },
 		{ 30,10 }
 	};
+
+	int map[width*height];
 };
