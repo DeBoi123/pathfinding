@@ -24,7 +24,8 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	brd(gfx)
 {
 }
 
@@ -42,4 +43,11 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	Location l1 = { 2,2 };
+	Location l2 = { 3,2 };
+	Location l3 = { 4,2 };
+
+	brd.DrawCell(l1, Colors::White);
+	brd.DrawSmallCell(l2, Colors::White);
+	brd.DrawCell(l3, Colors::White);
 }
