@@ -41,7 +41,10 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
+	Location plrStartLoc = { 10, 25 };
+	Player plr;
 	Board brd;
+
 	/********************************/
 	/*  User Variables              */
 	/********************************/

@@ -1,8 +1,9 @@
 #include "Board.h"
 
-Board::Board(Graphics & in_gfx)
+Board::Board(Graphics & gfx_in, Player& plr_in)
 	:
-	gfx(in_gfx)
+	gfx(gfx_in),
+	plr(plr_in)
 {
 }
 
@@ -26,4 +27,14 @@ void Board::DrawSmallCell(const Location & loc, const Color & c)
 			gfx.PutPixel(loc.x * cellDimension + x, loc.y * cellDimension + y, c);
 		}
 	}
+}
+
+void Board::Draw()
+{
+	for (int i = 0; i < nObstacles; i++)
+	{
+		DrawCell(Obstacles[i], obstacleColor);
+	}
+	DrawSmallCell(goalLocation, goalColor);
+	DrawSmallCell(plr.GetLocation(), Player::playerColor);
 }
