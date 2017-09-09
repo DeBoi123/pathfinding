@@ -41,7 +41,7 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-	Location plrStartLoc = { 10, 25 };
+	Location plrStartLoc = { 1, 3 };
 	Player plr;
 	Board brd;
 

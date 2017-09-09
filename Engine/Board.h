@@ -1,6 +1,7 @@
 #pragma once
 #include "Graphics.h"
 #include "Player.h"
+#include <vector>
 
 class Board
 {
@@ -14,24 +15,26 @@ public:
 	void DrawSmallCell(const Location& loc, const Color& c);
 	void DrawMap();
 	void Draw();
+	std::vector<int> GetNeighbors(int center);
+	void InitNeighborhoods();
+	
 
 private:
 	Graphics& gfx;
 	Player& plr;
 	static constexpr int cellDimension = 20;
 	static constexpr int cellPadding = 2;
-	static constexpr int width = 40;
-	static constexpr int height = 30;
-	static constexpr int nObstacles = 3;
+	static constexpr int width = 4;
+	static constexpr int height = 4;
+	static constexpr int nObstacles = 1;
 	static constexpr Color obstacleColor = Colors::Red;
 	static constexpr Color goalColor = Colors::Yellow;
 
-	Location goalLocation = { 20,10 };
+	Location goalLocation = { 1,0 };
 	Location obstacles[nObstacles] = {
-		{ 10,10 },
-		{ 20,20 },
-		{ 30,10 }
+		{ 1,1 }
 	};
 
 	int map[width*height];
+	std::vector< std::vector<int> > neighborhoods;
 };

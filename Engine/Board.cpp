@@ -7,6 +7,7 @@ Board::Board(Graphics & gfx_in, Player& plr_in)
 	plr(plr_in)
 {
 	InitMap();
+	InitNeighborhoods();
 }
 
 Location Board::GetPlayerLocation() const
@@ -117,4 +118,39 @@ void Board::Draw()
 	}
 	DrawSmallCell(goalLocation, goalColor);
 	DrawSmallCell(plr.GetLocation(), Player::playerColor);
+}
+
+std::vector<int> Board::GetNeighbors(int center)
+{
+	std::vector<int> neighbors;
+	//check for left neighbor and add if it exists
+	if (center % width != 0)
+	{
+		neighbors.push_back(center - 1);
+	}
+	//right
+	if (center % width != width - 1)
+	{
+		neighbors.push_back(center + 1);
+	}
+	// top
+	if (center >= width)
+	{
+		neighbors.push_back(center - width);
+	}
+	// bottom
+	if (center < height*(width - 1))
+	{
+		neighbors.push_back(center + width);
+	}
+
+	return neighbors;
+}
+
+void Board::InitNeighborhoods()
+{
+	for (int i = 0; i < width* height; i++)
+	{
+		neighborhoods.push_back(GetNeighbors(i));
+	}
 }
