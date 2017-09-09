@@ -6,6 +6,9 @@ class Board
 {
 public:
 	Board(Graphics& gfx_in, Player& plr_in);
+	Location GetPlayerLocation() const;
+	Location GetGoalLocation() const;
+	Location GetObstacleLocation(const int i) const;
 	void DrawCell(const Location& loc, const Color& c);
 	void DrawSmallCell(const Location& loc, const Color& c);
 	void Draw();
@@ -22,7 +25,7 @@ private:
 	static constexpr Color goalColor = Colors::Yellow;
 
 	Location goalLocation = { 20,10 };
-	Location Obstacles[nObstacles] = {
+	Location obstacles[nObstacles] = {
 		{ 10,10 },
 		{ 20,20 },
 		{ 30,10 }

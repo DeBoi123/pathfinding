@@ -1,10 +1,27 @@
 #include "Board.h"
+#include <assert.h>
 
 Board::Board(Graphics & gfx_in, Player& plr_in)
 	:
 	gfx(gfx_in),
 	plr(plr_in)
 {
+}
+
+Location Board::GetPlayerLocation() const
+{
+	return plr.GetLocation();
+}
+
+Location Board::GetGoalLocation() const
+{
+	return goalLocation;
+}
+
+Location Board::GetObstacleLocation(const int i) const
+{
+	assert (i < nObstacles);
+	return obstacles[i];
 }
 
 void Board::DrawCell(const Location & loc, const Color& c)
@@ -33,7 +50,7 @@ void Board::Draw()
 {
 	for (int i = 0; i < nObstacles; i++)
 	{
-		DrawCell(Obstacles[i], obstacleColor);
+		DrawCell(obstacles[i], obstacleColor);
 	}
 	DrawSmallCell(goalLocation, goalColor);
 	DrawSmallCell(plr.GetLocation(), Player::playerColor);
