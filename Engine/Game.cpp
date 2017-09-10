@@ -29,6 +29,8 @@ Game::Game( MainWindow& wnd )
 	brd(gfx,plr),
 	pfnd(brd,gfx)
 {
+	pfnd.CrudePathLoc(plrStartLoc, brd.GetGoalLocation());
+	brd.SetNewPlayerPath(pfnd.GetPath());
 }
 
 void Game::Go()
@@ -41,10 +43,25 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	if (started)
+	{
+		delayCounter++;
+		if (delayCounter >= delay)
+		{
+			brd.MovePlayer();
+			delayCounter = 0;
+		}
+	}
+	else
+	{
+		if (wnd.kbd.KeyIsPressed(VK_SPACE))
+		{
+			started = true;
+		}
+	}
 }
 
 void Game::ComposeFrame()
 {
 	brd.Draw();
-	pfnd.DrawMap();
 }

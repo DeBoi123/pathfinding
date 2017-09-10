@@ -47,6 +47,11 @@ private:
 	Board brd;
 	Pathfinder pfnd;
 
+	static constexpr int delay = 60;
+	int delayCounter = 0;
+
+	bool started = false;
+
 	/********************************/
 	/*  User Variables              */
 	/********************************/

@@ -24,6 +24,12 @@ Location Board::GetObstacleLocation(const int i) const
 	return obstacles[i];
 }
 
+void Board::SetNewPlayerPath(const std::vector<Location>& path)
+{
+	plr_path = path;
+	currentPlayerPosition = 0;
+}
+
 void Board::DrawCell(const Location & loc, const Color& c)
 {
 	for (int y = 0; y < cellDimension; y++)
@@ -54,4 +60,13 @@ void Board::Draw()
 	}
 	DrawSmallCell(goalLocation, goalColor);
 	DrawSmallCell(plr.GetLocation(), Player::playerColor);
+}
+
+void Board::MovePlayer()
+{
+	if (currentPlayerPosition < plr_path.size() - 1)
+	{
+		currentPlayerPosition++;
+	}
+	plr.MoveTo(plr_path.at(currentPlayerPosition));
 }

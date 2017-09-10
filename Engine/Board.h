@@ -13,10 +13,16 @@ public:
 	Location GetGoalLocation() const;
 	Location GetObstacleLocation(const int i) const;
 
+	//Setters:
+	void SetNewPlayerPath(const std::vector<Location>& path);
+
 	//Drawing:
 	void DrawCell(const Location& loc, const Color& c);
 	void DrawSmallCell(const Location& loc, const Color& c);
 	void Draw();
+
+	//other:
+	void MovePlayer();
 	
 	// static const variables:
 	static constexpr int cellDimension = 20;
@@ -33,4 +39,7 @@ private:
 
 	Location goalLocation = { 2,0 };
 	Location obstacles[nObstacles] = {{ 2,2 }};
+
+	std::vector<Location> plr_path;
+	int currentPlayerPosition = 0;
 };

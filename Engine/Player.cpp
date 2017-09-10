@@ -10,3 +10,8 @@ Location Player::GetLocation()
 {
 	return loc;
 }
+
+void Player::MoveTo(const Location& newLoc)
+{
+	loc = newLoc;
+}
