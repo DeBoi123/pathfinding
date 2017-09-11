@@ -27,10 +27,8 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	plr(plrStartLoc),
 	brd(gfx,plr),
-	pfnd( Location(brd.GetWidth(), brd.GetHeight()), plr.GetLocation(), brd.GetGoalLocation(), brd.GetObstacleLocation() )
+	pfnd( Location(brd.GetWidth(), brd.GetHeight()) )
 {
-	pfnd.CrudePathLoc(plrStartLoc, brd.GetGoalLocation());
-	brd.SetNewPlayerPath(pfnd.GetPath());
 }
 
 void Game::Go()
@@ -47,9 +45,13 @@ void Game::UpdateModel()
 	/*    Testing Ground    */
 
 	/************************/
-
+	
 	if (started)
 	{
+		if (wnd.kbd.KeyIsPressed(VK_SPACE))
+		{
+			brd.SetNewPlayerPath(pfnd.GetCrudePath(plr.GetLocation(), brd.GetGoalLocation(), brd.GetObstacleLocation()));
+		}
 		delayCounter++;
 		if (delayCounter >= delay)
 		{

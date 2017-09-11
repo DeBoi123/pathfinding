@@ -1,12 +1,17 @@
 #include "Pathfinder.h"
 
-Pathfinder::Pathfinder(const Location& brd_in, const Location& plr_in, const Location& goal_in, const std::vector<Location>& obst_in)
+Pathfinder::Pathfinder(const Location& brd_in)
 	:
-	boardDimensions(brd_in),
-	playerLocation(plr_in),
-	goalLocation(goal_in),
-	obstacles(obst_in)
+	boardDimensions(brd_in)
 {
+}
+
+void Pathfinder::Initialize(const Location & plr_in, const Location & goal_in, const std::vector<Location>& obst_in)
+{
+	playerLocation = plr_in;
+	goalLocation = goal_in;
+	obstacles = obst_in;
+
 	InitMap();
 	InitNeighborhoods();
 }
@@ -88,10 +93,12 @@ void Pathfinder::InitNeighborhoods()
 	}
 }
 
-void Pathfinder::CrudeSearch(const Location & plr_loc, const Location & goal_loc)
+std::vector<Location> Pathfinder::CrudeSearch()
 {
-	int plr = plr_loc.y * boardDimensions.x + plr_loc.x;
-	int goal = goal_loc.y * boardDimensions.y + goal_loc.x;
+	int plr = playerLocation.y * boardDimensions.x + playerLocation.x;
+	int goal = goalLocation.y * boardDimensions.y + goalLocation.x;
+	std::vector<Location> finalPath;
+	std::vector<int> finalPathInt;
 	std::vector< std::vector<int> > pathList1;
 	std::vector< std::vector<int> > pathList2;
 	std::vector<int> currentPath;
@@ -129,27 +136,27 @@ void Pathfinder::CrudeSearch(const Location & plr_loc, const Location & goal_loc
 			int currentPathEnd = pathList1.at(i).at(pathList1.at(i).size() - 1);
 			if (currentPathEnd == goal)
 			{
-				path_int = pathList1.at(i);
+				finalPathInt = pathList1.at(i);
 				finished = true;
 			}
 			i++;
 		}
 	}
-}
-
-void Pathfinder::CrudePathLoc(const Location & plr_loc, const Location & goal_loc)
-{
-	CrudeSearch(plr_loc, goal_loc);
-	path_loc.clear();
-	for (int i = 0; i < path_int.size(); i++)
+	
+	finalPath.clear();
+	for (int i = 0; i < finalPathInt.size(); i++)
 	{
-		int x = path_int.at(i) % boardDimensions.x;
-		int y = (path_int.at(i) - x) / boardDimensions.y;
-		path_loc.push_back({ x,y });
+		int x = finalPathInt.at(i) % boardDimensions.x;
+		int y = (finalPathInt.at(i) - x) / boardDimensions.y;
+		finalPath.push_back({ x,y });
 	}
+
+	return finalPath;
 }
 
-std::vector<Location> Pathfinder::GetPath() const
+std::vector<Location> Pathfinder::GetCrudePath(const Location& plr_in, const Location& goal_in, const std::vector<Location>& obst_in)
 {
-	return path_loc;
+	Initialize(plr_in, goal_in, obst_in);
+	
+	return CrudeSearch();
 }

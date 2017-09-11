@@ -5,17 +5,18 @@
 class Pathfinder
 {
 public:
-	Pathfinder(const Location& brd_in, const Location& plr_in, const Location& goal_in, const std::vector<Location>& obst_in);
+	Pathfinder(const Location& brd_in);
 
-	void CrudeSearch(const Location& plr_loc, const Location& goal_loc);
-	void CrudePathLoc(const Location& plr_loc, const Location& goal_loc);
-	std::vector<Location> GetPath() const;
+	std::vector<Location> GetCrudePath(const Location& plr_in, const Location& goal_in, const std::vector<Location>& obst_in);
 
 private:
 	//private member functions:
+	void Initialize(const Location& plr_in, const Location& goal_in, const std::vector<Location>& obst_in);
 	void InitMap();
 	void InitNeighborhoods();
 	std::vector<int> GetNeighbors(int center);
+
+	std::vector<Location> CrudeSearch();
 
 	//External parameters:
 	Location boardDimensions;
@@ -26,6 +27,4 @@ private:
 	//Internal parameters:
 	std::vector<int> map;
 	std::vector< std::vector<int> > neighborhoods;
-	std::vector<int> path_int;
-	std::vector<Location> path_loc;
 };

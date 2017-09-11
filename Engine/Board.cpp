@@ -5,6 +5,7 @@ Board::Board(Graphics & gfx_in, Player& plr_in)
 	gfx(gfx_in),
 	plr(plr_in)
 {
+	plr_path = { plr.GetLocation() };
 }
 
 Location Board::GetGoalLocation() const
