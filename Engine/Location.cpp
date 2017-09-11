@@ -42,12 +42,12 @@ int Location::TaxiNorm() const
 	return abs(x) + abs(y);
 }
 
-int Location::TaxiMetrik(const Location & rhs) const
+int Location::TaxiMetric(const Location & rhs) const
 {
 	return (*this - rhs).TaxiNorm();
 }
 
-int TaxiMetrik(const Location & lhs, const Location & rhs)
+int TaxiMetric(const Location & lhs, const Location & rhs)
 {
-	return lhs.TaxiMetrik(rhs);
+	return lhs.TaxiMetric(rhs);
 }

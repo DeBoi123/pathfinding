@@ -21,7 +21,7 @@ public:
 
 	//other member functions:
 	int TaxiNorm() const;
-	int TaxiMetrik(const Location& rhs) const;
+	int TaxiMetric(const Location& rhs) const;
 
 
 	//Data members:
@@ -29,4 +29,4 @@ public:
 	int y;
 };
 
-int TaxiMetrik(const Location& lhs, const Location& rhs);
+int TaxiMetric(const Location& lhs, const Location& rhs);
