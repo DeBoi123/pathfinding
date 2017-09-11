@@ -43,6 +43,11 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	/************************/
+	/*    Testing Ground    */
+
+	/************************/
+
 	if (started)
 	{
 		delayCounter++;
