@@ -1,9 +1,11 @@
 #include "Pathfinder.h"
 
-Pathfinder::Pathfinder(Board & brd_in, Graphics & gfx_in)
+Pathfinder::Pathfinder(const Location& brd_in, const Location& plr_in, const Location& goal_in, const std::vector<Location>& obst_in)
 	:
-	brd(brd_in),
-	gfx(gfx_in)
+	boardDimensions(brd_in),
+	playerLocation(plr_in),
+	goalLocation(goal_in),
+	obstacles(obst_in)
 {
 	InitMap();
 	InitNeighborhoods();
@@ -11,21 +13,23 @@ Pathfinder::Pathfinder(Board & brd_in, Graphics & gfx_in)
 
 void Pathfinder::InitMap()
 {
-	int plrLoc = brd.GetPlayerLocation().y * Board::width + brd.GetPlayerLocation().x;
-	int goalLoc = brd.GetGoalLocation().y * Board::width + brd.GetGoalLocation().x;
-	int obstacleLoc[Board::nObstacles];
-	for (int i = 0; i < Board::nObstacles; i++)
+	int width = boardDimensions.x;
+	int height = boardDimensions.y;
+	int plrLoc = playerLocation.y * width + playerLocation.x;
+	int goalLoc = goalLocation.y * width + goalLocation.x;
+	std::vector<int> obstacleLoc;
+	for (int i = 0; i < obstacles.size(); i++)
 	{
-		obstacleLoc[i] = brd.GetObstacleLocation(i).y * Board::width + brd.GetObstacleLocation(i).x;
+		obstacleLoc.push_back( obstacles.at(i).y * width + obstacles.at(i).x);
 	}
 
-	for (int i = 0; i < Board::width * Board::height; i++)
+	for (int i = 0; i < width * height; i++)
 	{
 		bool isNotObstacle = true;
 
-		for (int j = 0; j < Board::nObstacles; j++)
+		for (int j = 0; j < obstacles.size(); j++)
 		{
-			isNotObstacle = isNotObstacle && (i != obstacleLoc[j]);
+			isNotObstacle = isNotObstacle && (i != obstacleLoc.at(j));
 		}
 
 		if (!isNotObstacle)
@@ -47,51 +51,30 @@ void Pathfinder::InitMap()
 	}
 }
 
-void Pathfinder::DrawMap()
-{
-	for (int i = 0; i < Board::width * Board::height; i++)
-	{
-		if (map.at(i) == 3)
-		{
-			gfx.PutPixel(i % Board::width, (i - (i % Board::width)) / Board::width, Board::obstacleColor);
-		}
-		else if (map.at(i) == 2)
-		{
-			gfx.PutPixel(i % Board::width, (i - (i % Board::width)) / Board::width, Board::goalColor);
-		}
-		else if (map.at(i) == 1)
-		{
-			gfx.PutPixel(i % Board::width, (i - (i % Board::width)) / Board::width, Player::playerColor);
-		}
-		else
-		{
-			gfx.PutPixel(i % Board::width, (i - (i % Board::width)) / Board::width, Colors::Black);
-		}
-	}
-}
-
 std::vector<int> Pathfinder::GetNeighbors(int center)
 {
+	int width = boardDimensions.x;
+	int height = boardDimensions.y;
 	std::vector<int> neighbors;
 	//check for left neighbor and add if it exists
-	if (center % Board::width != 0)
+	if (center % width != 0)
 	{
 		neighbors.push_back(center - 1);
 	}
 	//right
-	if (center % Board::width != Board::width - 1)
+	if (center % width != width - 1)
 	{
 		neighbors.push_back(center + 1);
 	}
 	// top
-	if (center >= Board::width)
+	if (center >= width)
 	{
-		neighbors.push_back(center - Board::width);
+		neighbors.push_back(center - width);
 	}
 	// bottom
-	if (center < Board::height*(Board::width - 1))
+	if (center < height * (width - 1))
 	{
-		neighbors.push_back(center + Board::width);
+		neighbors.push_back(center + width);
 	}
 
 	return neighbors;
@@ -99,7 +82,7 @@ std::vector<int> Pathfinder::GetNeighbors(int center)
 
 void Pathfinder::InitNeighborhoods()
 {
-	for (int i = 0; i < Board::width * Board::height; i++)
+	for (int i = 0; i < boardDimensions.x * boardDimensions.y; i++)
 	{
 		neighborhoods.push_back(GetNeighbors(i));
 	}
@@ -107,8 +90,8 @@ void Pathfinder::InitNeighborhoods()
 
 void Pathfinder::CrudeSearch(const Location & plr_loc, const Location & goal_loc)
 {
-	int plr = plr_loc.y * Board::width + plr_loc.x;
-	int goal = goal_loc.y * Board::width + goal_loc.x;
+	int plr = plr_loc.y * boardDimensions.x + plr_loc.x;
+	int goal = goal_loc.y * boardDimensions.y + goal_loc.x;
 	std::vector< std::vector<int> > pathList1;
 	std::vector< std::vector<int> > pathList2;
 	std::vector<int> currentPath;
@@ -160,8 +143,8 @@ void Pathfinder::CrudePathLoc(const Location & plr_loc, const Location & goal_lo
 	path_loc.clear();
 	for (int i = 0; i < path_int.size(); i++)
 	{
-		int x = path_int.at(i) % Board::width;
-		int y = (path_int.at(i) - x) / Board::width;
+		int x = path_int.at(i) % boardDimensions.x;
+		int y = (path_int.at(i) - x) / boardDimensions.y;
 		path_loc.push_back({ x,y });
 	}
 }

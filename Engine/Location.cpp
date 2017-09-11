@@ -46,3 +46,8 @@ int Location::TaxiMetrik(const Location & rhs) const
 {
 	return (*this - rhs).TaxiNorm();
 }
+
+int TaxiMetrik(const Location & lhs, const Location & rhs)
+{
+	return lhs.TaxiMetrik(rhs);
+}

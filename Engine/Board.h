@@ -9,9 +9,10 @@ public:
 	Board(Graphics& gfx_in, Player& plr_in);
 
 	// Getters:
-	Location GetPlayerLocation() const;
 	Location GetGoalLocation() const;
-	Location GetObstacleLocation(const int i) const;
+	std::vector<Location> GetObstacleLocation() const;
+	int GetWidth() const;
+	int GetHeight() const;
 
 	//Setters:
 	void SetNewPlayerPath(const std::vector<Location>& path);
@@ -38,7 +39,7 @@ private:
 	Player& plr;
 
 	Location goalLocation = { 2,0 };
-	Location obstacles[nObstacles] = {{ 2,2 }};
+	std::vector<Location> obstacles = { Location(2,2) };
 
 	std::vector<Location> plr_path;
 	int currentPlayerPosition = 0;

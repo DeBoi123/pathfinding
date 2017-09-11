@@ -1,5 +1,4 @@
 #include "Board.h"
-#include <assert.h>
 
 Board::Board(Graphics & gfx_in, Player& plr_in)
 	:
@@ -8,20 +7,25 @@ Board::Board(Graphics & gfx_in, Player& plr_in)
 {
 }
 
-Location Board::GetPlayerLocation() const
-{
-	return plr.GetLocation();
-}
-
 Location Board::GetGoalLocation() const
 {
 	return goalLocation;
 }
 
-Location Board::GetObstacleLocation(const int i) const
+std::vector<Location> Board::GetObstacleLocation() const
 {
-	assert (i < nObstacles);
-	return obstacles[i];
+
+	return obstacles;
+}
+
+int Board::GetWidth() const
+{
+	return width;
+}
+
+int Board::GetHeight() const
+{
+	return height;
 }
 
 void Board::SetNewPlayerPath(const std::vector<Location>& path)

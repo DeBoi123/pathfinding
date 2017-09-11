@@ -28,3 +28,5 @@ public:
 	int x;
 	int y;
 };
+
+int TaxiMetrik(const Location& lhs, const Location& rhs);

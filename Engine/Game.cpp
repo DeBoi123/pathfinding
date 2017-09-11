@@ -27,7 +27,7 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	plr(plrStartLoc),
 	brd(gfx,plr),
-	pfnd(brd,gfx)
+	pfnd( Location(brd.GetWidth(), brd.GetHeight()), plr.GetLocation(), brd.GetGoalLocation(), brd.GetObstacleLocation() )
 {
 	pfnd.CrudePathLoc(plrStartLoc, brd.GetGoalLocation());
 	brd.SetNewPlayerPath(pfnd.GetPath());
