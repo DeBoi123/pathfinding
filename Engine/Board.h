@@ -14,17 +14,11 @@ public:
 	int GetWidth() const;
 	int GetHeight() const;
 
-	//Setters:
-	void SetNewPlayerPath(const std::vector<Location>& path);
-
 	//Drawing:
 	void DrawCell(const Location& loc, const Color& c);
 	void DrawSmallCell(const Location& loc, const Color& c);
 	void Draw();
 
-	//other:
-	void MovePlayer();
-	
 	// static const variables:
 	static constexpr int cellDimension = 20;
 	static constexpr int cellPadding = 2;
@@ -39,10 +33,7 @@ private:
 	Graphics& gfx;
 	Player& plr;
 
-	Location goalLocation = { 2,0 };
+	Location goalLocation = { 4,0 };
 
-	std::vector<Location> obstacles = { { 1,2 }, { 2,2 }, { 3,2 } };
-
-	std::vector<Location> plr_path;
-	int currentPlayerPosition = 0;
+	std::vector<Location> obstacles = { { 4,4 } };
 };

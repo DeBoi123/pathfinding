@@ -42,7 +42,7 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-	Location plrStartLoc = { 2, 4 };
+	Location plrStartLoc = { 4, 9 };
 	Player plr;
 	Board brd;
 	Pathfinder pfnd;

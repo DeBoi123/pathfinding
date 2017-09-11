@@ -5,7 +5,6 @@ Board::Board(Graphics & gfx_in, Player& plr_in)
 	gfx(gfx_in),
 	plr(plr_in)
 {
-	plr_path = { plr.GetLocation() };
 }
 
 Location Board::GetGoalLocation() const
@@ -27,12 +26,6 @@ int Board::GetWidth() const
 int Board::GetHeight() const
 {
 	return height;
-}
-
-void Board::SetNewPlayerPath(const std::vector<Location>& path)
-{
-	plr_path = path;
-	currentPlayerPosition = 0;
 }
 
 void Board::DrawCell(const Location & loc, const Color& c)
@@ -80,13 +73,4 @@ void Board::Draw()
 	}
 	DrawSmallCell(goalLocation, goalColor);
 	DrawSmallCell(plr.GetLocation(), Player::playerColor);
-}
-
-void Board::MovePlayer()
-{
-	if (currentPlayerPosition < plr_path.size() - 1)
-	{
-		currentPlayerPosition++;
-	}
-	plr.MoveTo(plr_path.at(currentPlayerPosition));
 }

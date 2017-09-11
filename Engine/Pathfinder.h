@@ -14,9 +14,9 @@ private:
 	void Initialize(const Location& plr_in, const Location& goal_in);
 	void InitMap();
 	void InitNeighborhoods();
-	std::vector<int> GetNeighbors(int center);
+	std::vector<int> GetNeighbors(const int center) const;
 
-	std::vector<Location> CrudeSearch();
+	std::vector<Location> CrudeSearch() const;
 
 	//External parameters:
 	Location boardDimensions;

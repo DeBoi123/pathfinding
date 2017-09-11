@@ -55,7 +55,7 @@ void Pathfinder::InitMap()
 	}
 }
 
-std::vector<int> Pathfinder::GetNeighbors(int center)
+std::vector<int> Pathfinder::GetNeighbors(const int center) const
 {
 	int width = boardDimensions.x;
 	int height = boardDimensions.y;
@@ -92,56 +92,71 @@ void Pathfinder::InitNeighborhoods()
 	}
 }
 
-std::vector<Location> Pathfinder::CrudeSearch()
+std::vector<Location> Pathfinder::CrudeSearch() const
 {
 	int plr = playerLocation.y * boardDimensions.x + playerLocation.x;
 	int goal = goalLocation.y * boardDimensions.y + goalLocation.x;
+	int winningIndex = 0;
 	std::vector<Location> finalPath;
 	std::vector<int> finalPathInt;
 	std::vector< std::vector<int> > pathList1;
 	std::vector< std::vector<int> > pathList2;
 	std::vector<int> currentPath;
+	currentPath.clear();
 	currentPath.push_back(plr);
 	pathList1.push_back(currentPath);
-	bool finished = false;
-
+	bool finished = (plr == goal);																		//this checks whether the player is standing on the goal already
 	while (!finished)
 	{
 		pathList2.clear();
-		for (int i = 0; i < pathList1.size(); i++) //iterating through all currently valid paths
+		for (int i = 0; i < pathList1.size(); i++)														//iterating through all currently valid paths
 		{
 			std::vector<int> tempPath1 = pathList1.at(i);
-			for (int j = 0; j < neighborhoods.at(tempPath1.at(tempPath1.size() - 1)).size(); j++)
-				/*
-				This inner loop iterates through all neighbors of the last location of the current path and extends the path by that neighbor.
-				*/
-			{
-				int currentNode = tempPath1.at(tempPath1.size() - 1);
-				int nextNode = (neighborhoods.at(currentNode)).at(j);
-
+			int currentNode = tempPath1.at(tempPath1.size() - 1);
+			for (int j = 0; j < neighborhoods.at(tempPath1.at(tempPath1.size() - 1)).size(); j++)		/*This inner loop iterates through			*/
+			{																							/*all neighbors of the last location of the	*/
+				int nextNode = (neighborhoods.at(currentNode)).at(j);									/*current path and extends the path by		*/
+																										/*that neighbor.							*/
 				if (map.at(nextNode) != 3)
 				{
 					std::vector<int> tempPath2 = tempPath1;
 					tempPath2.push_back((neighborhoods.at(currentNode)).at(j));
-					pathList2.push_back(tempPath2);
+					
+					bool isNotLoop = true;																//check to see if a loop got created
+					for (int k = 0; k < tempPath2.size() - 1; k++)
+					{
+						isNotLoop = isNotLoop && (tempPath2.at(tempPath2.size() - 1) != tempPath2.at(k));
+					}
+					if (isNotLoop)
+					{
+						pathList2.push_back(tempPath2);
+					}
 				}
 			}
 		}
 		pathList1 = pathList2;
 		pathList2.clear();
+		//No path to goal:
+		if (pathList1.size() == 0)
+		{
+			pathList1.push_back({ plr });
+			winningIndex = 0;
+			finished = true;
+		}
+
 		int i = 0;
 		while (!finished && i < pathList1.size())
 		{
 			int currentPathEnd = pathList1.at(i).at(pathList1.at(i).size() - 1);
 			if (currentPathEnd == goal)
 			{
-				finalPathInt = pathList1.at(i);
+				winningIndex = i;
 				finished = true;
 			}
 			i++;
 		}
 	}
-	
+	finalPathInt = pathList1.at(winningIndex);
 	finalPath.clear();
 	for (int i = 0; i < finalPathInt.size(); i++)
 	{
