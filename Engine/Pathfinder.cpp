@@ -1,16 +1,15 @@
 #include "Pathfinder.h"
 
-Pathfinder::Pathfinder(const Location& brd_in)
-	:
-	boardDimensions(brd_in)
+void Pathfinder::SetBoard(const Location & brd_in, const std::vector<Location>& obst_in)
 {
+	boardDimensions = brd_in;
+	obstacles = obst_in;
 }
 
-void Pathfinder::Initialize(const Location & plr_in, const Location & goal_in, const std::vector<Location>& obst_in)
+void Pathfinder::Initialize(const Location & plr_in, const Location & goal_in)
 {
 	playerLocation = plr_in;
 	goalLocation = goal_in;
-	obstacles = obst_in;
 
 	InitMap();
 	InitNeighborhoods();
@@ -154,9 +153,9 @@ std::vector<Location> Pathfinder::CrudeSearch()
 	return finalPath;
 }
 
-std::vector<Location> Pathfinder::GetCrudePath(const Location& plr_in, const Location& goal_in, const std::vector<Location>& obst_in)
+std::vector<Location> Pathfinder::GetCrudePath(const Location& plr_in, const Location& goal_in)
 {
-	Initialize(plr_in, goal_in, obst_in);
+	Initialize(plr_in, goal_in);
 	
 	return CrudeSearch();
 }

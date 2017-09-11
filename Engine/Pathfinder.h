@@ -5,13 +5,13 @@
 class Pathfinder
 {
 public:
-	Pathfinder(const Location& brd_in);
 
-	std::vector<Location> GetCrudePath(const Location& plr_in, const Location& goal_in, const std::vector<Location>& obst_in);
+	void SetBoard(const Location& brd_in, const std::vector<Location>& obst_in);
+	std::vector<Location> GetCrudePath(const Location& plr_in, const Location& goal_in);
 
 private:
 	//private member functions:
-	void Initialize(const Location& plr_in, const Location& goal_in, const std::vector<Location>& obst_in);
+	void Initialize(const Location& plr_in, const Location& goal_in);
 	void InitMap();
 	void InitNeighborhoods();
 	std::vector<int> GetNeighbors(int center);
