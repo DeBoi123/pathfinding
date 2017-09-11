@@ -30,7 +30,8 @@ public:
 	static constexpr int cellPadding = 2;
 	static constexpr int width = 5;
 	static constexpr int height = 5;
-	static constexpr int nObstacles = 1;
+	static constexpr int offsetX = 350;
+	static constexpr int offsetY = 250;
 	static constexpr Color obstacleColor = Colors::Red;
 	static constexpr Color goalColor = Colors::Yellow;
 
@@ -39,7 +40,7 @@ private:
 	Player& plr;
 
 	Location goalLocation = { 2,0 };
-	std::vector<Location> obstacles = { Location(2,2) };
+	std::vector<Location> obstacles = { { 1,2 }, { 2,2 }, { 3,2 } };
 
 	std::vector<Location> plr_path;
 	int currentPlayerPosition = 0;

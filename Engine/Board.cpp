@@ -40,7 +40,7 @@ void Board::DrawCell(const Location & loc, const Color& c)
 	{
 		for (int x = 0; x < cellDimension; x++)
 		{
-			gfx.PutPixel( loc.x * cellDimension + x,loc.y * cellDimension + y,c );
+			gfx.PutPixel( loc.x * cellDimension + x + offsetX, loc.y * cellDimension + y + offsetY, c );
 		}
 	}
 }
@@ -51,16 +51,31 @@ void Board::DrawSmallCell(const Location & loc, const Color & c)
 	{
 		for (int x = cellPadding; x < cellDimension - cellPadding; x++)
 		{
-			gfx.PutPixel(loc.x * cellDimension + x, loc.y * cellDimension + y, c);
+			gfx.PutPixel(loc.x * cellDimension + x + offsetX, loc.y * cellDimension + y + offsetY, c);
 		}
 	}
 }
 
 void Board::Draw()
 {
-	for (int i = 0; i < nObstacles; i++)
+	for (int y = 0; y < height * cellDimension; y++)
 	{
-		DrawCell(obstacles[i], obstacleColor);
+		for (int x = 0; x < width * cellDimension; x++)
+		{
+			gfx.PutPixel(x + offsetX, y + offsetY, Colors::Gray);
+		}
+	}
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			DrawSmallCell(Location(x, y), Colors::Black);
+		}
+	}
+
+	for (int i = 0; i < obstacles.size(); i++)
+	{
+		DrawSmallCell(obstacles.at(i), obstacleColor);
 	}
 	DrawSmallCell(goalLocation, goalColor);
 	DrawSmallCell(plr.GetLocation(), Player::playerColor);
