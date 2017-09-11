@@ -13,6 +13,16 @@ public:
 	std::vector<Location> GetObstacleLocation() const;
 	int GetWidth() const;
 	int GetHeight() const;
+	bool GoalSet() const;
+	bool ObstaclesSet() const;
+
+	// Setters:
+	void AddNewObstacle(const int x, const int y);
+	void DeleteObstacles();
+	void DeleteGoal();
+	void SetObstacles(bool b);
+	void SetGoal(const int x, const int y);
+
 
 	//Drawing:
 	void DrawCell(const Location& loc, const Color& c);
@@ -33,7 +43,8 @@ private:
 	Graphics& gfx;
 	Player& plr;
 
-	Location goalLocation = { 4,0 };
-
-	std::vector<Location> obstacles = { { 4,4 } };
+	bool goalSet = false;
+	Location goalLocation;
+	bool obstaclesSet = false;
+	std::vector<Location> obstacles;
 };

@@ -18,6 +18,10 @@ public:
 	{
 		return ((x == rhs.x) && (y == rhs.y));
 	}
+	bool operator != (Location& rhs)
+	{
+		return ((x != rhs.x) || (y != rhs.y));
+	}
 
 	//other member functions:
 	int TaxiNorm() const;

@@ -29,7 +29,6 @@ Game::Game( MainWindow& wnd )
 	plr(plrStartLoc,pfnd),
 	brd(gfx,plr)
 {
-	pfnd.SetBoard(Location(brd.GetWidth(), brd.GetHeight()), brd.GetObstacleLocation());
 }
 
 void Game::Go()
@@ -44,7 +43,7 @@ void Game::UpdateModel()
 {
 	/************************/
 	/*    Testing Ground    */
-
+	
 	/************************/
 	
 	if (started)
@@ -55,13 +54,35 @@ void Game::UpdateModel()
 			plr.MoveOneStepTo(brd.GetGoalLocation());
 			delayCounter = 0;
 		}
+		if (wnd.kbd.KeyIsPressed(VK_RETURN))
+		{
+			brd.DeleteGoal();
+			brd.DeleteObstacles();
+			started = false;
+		}
 	}
 	else
 	{
-		if (wnd.kbd.KeyIsPressed(VK_SPACE))
+		if (wnd.mouse.LeftIsPressed() && wnd.mouse.IsInWindow() && brd.ObstaclesSet() == false)
 		{
+			brd.AddNewObstacle(wnd.mouse.GetPosX(), wnd.mouse.GetPosY());
+		}
+
+		if (wnd.mouse.LeftIsPressed() && wnd.mouse.IsInWindow() && brd.ObstaclesSet() == true)
+		{
+			brd.SetGoal(wnd.mouse.GetPosX(), wnd.mouse.GetPosY());
+		}
+
+		if (wnd.kbd.KeyIsPressed(VK_SPACE) && brd.ObstaclesSet() == false)
+		{
+			brd.SetObstacles(true);
+		}
+		else if (wnd.kbd.KeyIsPressed(VK_SPACE) && brd.GoalSet() == true)
+		{
+			pfnd.SetBoard(Location(brd.GetWidth(), brd.GetHeight()), brd.GetObstacleLocation());
 			started = true;
 		}
+
 	}
 }
 
