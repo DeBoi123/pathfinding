@@ -26,7 +26,7 @@ void Pathfinder::InitMap()
 	{
 		obstacleLoc.push_back( obstacles.at(i).y * width + obstacles.at(i).x);
 	}
-
+	map.clear();
 	for (int i = 0; i < width * height; i++)
 	{
 		bool isNotObstacle = true;
