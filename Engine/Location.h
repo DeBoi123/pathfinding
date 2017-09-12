@@ -34,3 +34,6 @@ public:
 };
 
 int TaxiMetric(const Location& lhs, const Location& rhs);
+
+int ConvertLocToInt(const Location& brdDim, const Location& loc);
+Location ConvertIntToLoc(const Location& brdDim, int loc_int);

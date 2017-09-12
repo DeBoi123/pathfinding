@@ -51,3 +51,14 @@ int TaxiMetric(const Location & lhs, const Location & rhs)
 {
 	return lhs.TaxiMetric(rhs);
 }
+
+int ConvertLocToInt(const Location & brdDim, const Location & loc)
+{
+	return loc.y * brdDim.x + loc.x;
+}
+
+Location ConvertIntToLoc(const Location & brdDim, int loc_int)
+{
+	int x = loc_int % brdDim.x;
+	return Location(x, (x - loc_int) / brdDim.x);
+}
